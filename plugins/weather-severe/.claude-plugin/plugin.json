@@ -1,0 +1,13 @@
+{
+  "name": "weather-severe",
+  "description": "Severe weather data from the Storm Prediction Center — active tornado and thunderstorm watches, convective outlooks (Day 1–8 risk), and mesoscale discussions.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Weather Simplified",
+    "url": "https://github.com/klietzau280"
+  },
+  "homepage": "https://github.com/klietzau280/claude-plugins-weather-simplified",
+  "repository": "https://github.com/klietzau280/weather-simplified-graphql",
+  "license": "MIT",
+  "keywords": ["severe", "tornado", "thunderstorm", "spc", "watches", "noaa"]
+}

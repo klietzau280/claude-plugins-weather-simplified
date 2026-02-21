@@ -1,0 +1,6 @@
+{
+  "weather-forecasts": {
+    "type": "http",
+    "url": "https://weather-simplified-graphql.azurewebsites.net/mcp"
+  }
+}

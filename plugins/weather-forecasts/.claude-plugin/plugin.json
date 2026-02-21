@@ -1,0 +1,13 @@
+{
+  "name": "weather-forecasts",
+  "description": "Current conditions, day/extended/hourly forecasts, and weather alerts for any US zip code. Powered by the National Weather Service.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Weather Simplified",
+    "url": "https://github.com/klietzau280"
+  },
+  "homepage": "https://github.com/klietzau280/claude-plugins-weather-simplified",
+  "repository": "https://github.com/klietzau280/weather-simplified-graphql",
+  "license": "MIT",
+  "keywords": ["weather", "forecast", "alerts", "noaa", "nws"]
+}
