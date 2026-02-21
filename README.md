@@ -26,44 +26,94 @@ No API key required. No authentication. Just weather.
 
 ---
 
-## Tools (12)
+## Install via Claude Code Plugin Marketplace
 
-### Location-Based (by ZIP code)
+### One-line install
 
-| Tool | Parameters | What it returns |
-|------|-----------|-----------------|
-| `get_current_conditions` | `zipCode` | Temperature, wind speed/direction, humidity, dew point, heat index, text description |
-| `get_forecast` | `zipCode` | Today & tonight forecast periods, precipitation chance, sunrise/sunset |
-| `get_extended_forecast` | `zipCode` | 4-day / 8-period forecast with day & night detail |
-| `get_hourly_forecast` | `zipCode`, `hours` | Hour-by-hour forecast (default 24h, max 156h) with temp, wind, precip, humidity |
-| `get_weather_alerts` | `zipCode` | Active NWS alerts — severity, event type, headline, description, affected areas |
+```shell
+/plugin marketplace add klietzau280/claude-plugins-weather-simplified
+/plugin install weather-simplified@weather-simplified
+```
 
-### Tropical Weather (no parameters)
+### Step by step
 
-| Tool | What it returns |
-|------|-----------------|
-| `get_tropical_weather` | Both Atlantic & Pacific basins — active storms, advisories, outlooks, formation chances |
-| `get_tropical_atlantic` | Atlantic basin only — storms, advisories, outlook, formation chances, discussion |
-| `get_tropical_pacific` | Eastern Pacific basin only — storms, advisories, outlook, formation chances, discussion |
+1. **Add the marketplace** — In Claude Code, run:
+   ```shell
+   /plugin marketplace add klietzau280/claude-plugins-weather-simplified
+   ```
 
-### Severe Weather (no parameters)
+2. **Browse available plugins** — Run `/plugin` and go to the **Discover** tab to see the Weather Simplified plugin.
 
-| Tool | What it returns |
-|------|-----------------|
-| `get_severe_weather` | Combined overview — all watches, outlooks, and mesoscale discussions |
-| `get_watches` | Active tornado & severe thunderstorm watches from the Storm Prediction Center |
-| `get_convective_outlooks` | SPC Day 1–8 categorical, tornado, wind, and hail risk maps |
-| `get_mesoscale_discussions` | SPC real-time severe weather analysis and short-term forecasts |
+3. **Install the plugin** — Select it and choose your scope:
+   - **User scope**: available across all your projects (default)
+   - **Project scope**: shared with collaborators via `.claude/settings.json`
+   - **Local scope**: just for you in this repo
+
+4. **Start using it** — The 7 skills and 12 MCP tools are immediately available:
+   ```shell
+   /weather-simplified:current-weather
+   /weather-simplified:forecast
+   /weather-simplified:severe-weather
+   ```
+
+   Or just ask Claude naturally — it will use the tools automatically:
+   > "What's the weather like in Denver?"
 
 ---
 
-## Setup
+## What's Included
 
-### Option 1: Remote (HTTP) — No install required
+### 7 Skills (slash commands)
 
-The MCP server is deployed and accessible over HTTP. Add this to your Claude Desktop config:
+| Skill | Command | Description |
+|-------|---------|-------------|
+| Current Weather | `/weather-simplified:current-weather` | Current conditions for any US zip code |
+| Forecast | `/weather-simplified:forecast` | Today & tonight forecast with sunrise/sunset |
+| Extended Forecast | `/weather-simplified:extended-forecast` | 4-day / 8-period detailed outlook |
+| Hourly Forecast | `/weather-simplified:hourly-forecast` | Hour-by-hour forecast, up to 156 hours |
+| Weather Alerts | `/weather-simplified:weather-alerts` | Active NWS warnings and advisories |
+| Tropical Weather | `/weather-simplified:tropical-weather` | Atlantic & Pacific storms, formation chances |
+| Severe Weather | `/weather-simplified:severe-weather` | Watches, outlooks, mesoscale discussions |
 
-**`claude_desktop_config.json`**
+### 12 MCP Tools
+
+Skills invoke these tools automatically, but Claude can also call them directly:
+
+**Location-based (by ZIP code)**
+
+| Tool | Parameters | Returns |
+|------|-----------|---------|
+| `get_current_conditions` | `zipCode` | Temperature, wind, humidity, dew point, heat index, description |
+| `get_forecast` | `zipCode` | Day & night periods, precipitation chance, sunrise/sunset |
+| `get_extended_forecast` | `zipCode` | 4-day / 8-period forecast with day & night detail |
+| `get_hourly_forecast` | `zipCode`, `hours` | Hour-by-hour (default 24h, max 156h) temp, wind, precip, humidity |
+| `get_weather_alerts` | `zipCode` | Active NWS alerts — severity, event type, headline, description |
+
+**Tropical weather (no parameters)**
+
+| Tool | Returns |
+|------|---------|
+| `get_tropical_weather` | Both basins — active storms, advisories, outlooks, formation chances |
+| `get_tropical_atlantic` | Atlantic basin — storms, advisories, outlook, formation chances |
+| `get_tropical_pacific` | Eastern Pacific — storms, advisories, outlook, formation chances |
+
+**Severe weather (no parameters)**
+
+| Tool | Returns |
+|------|---------|
+| `get_severe_weather` | Combined watches, outlooks, and mesoscale discussions |
+| `get_watches` | Active tornado & severe thunderstorm watches |
+| `get_convective_outlooks` | SPC Day 1–8 categorical, tornado, wind, hail risk |
+| `get_mesoscale_discussions` | SPC real-time severe weather analysis |
+
+---
+
+## Alternative Setup (without plugin marketplace)
+
+### Claude Desktop — Remote (HTTP, no install)
+
+Add to `claude_desktop_config.json`:
+
 ```json
 {
   "mcpServers": {
@@ -75,21 +125,17 @@ The MCP server is deployed and accessible over HTTP. Add this to your Claude Des
 }
 ```
 
-### Option 2: Local (stdio)
-
-Clone the main repository and run the MCP server locally:
+### Claude Desktop — Local (stdio)
 
 ```bash
 git clone https://github.com/klietzau280/weather-simplified-graphql.git
 cd weather-simplified-graphql
 npm install
-cp .env.example .env   # add your NOAA config
 npm run build:mcp
 ```
 
-Then add to your Claude Desktop config:
+Add to `claude_desktop_config.json`:
 
-**`claude_desktop_config.json`**
 ```json
 {
   "mcpServers": {
@@ -101,37 +147,121 @@ Then add to your Claude Desktop config:
 }
 ```
 
-### Option 3: Local dev (no build step)
+---
 
-```bash
-cd weather-simplified-graphql
-npm run dev:mcp
+## Submitting to the Anthropic Official Plugin Directory
+
+Want this plugin in the official `/plugin` Discover tab? Here's the process:
+
+1. **Submit via the form**: [clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)
+
+2. **What Anthropic reviews**:
+   - Plugin quality and functionality
+   - Security (no credentials, no data exfiltration)
+   - MCP server safety (`readOnlyHint: true`, `destructiveHint: false`)
+   - Clear descriptions and documentation
+
+3. **Badge types**:
+   - **Listed**: basic automated review, appears in the directory
+   - **Anthropic Verified**: additional manual review for quality and safety
+
+4. **Our plugin meets the requirements**:
+   - All tools are read-only (no destructive operations)
+   - No authentication or API keys required
+   - No personal data collected
+   - Public NOAA data source
+   - MIT licensed
+   - Clear tool descriptions with parameter validation
+
+---
+
+## Hosting Your Own Marketplace
+
+If you want to fork this and create your own weather plugin marketplace:
+
+### Repository Structure
+
+```
+your-repo/
+├── .claude-plugin/
+│   └── marketplace.json        # Marketplace catalog
+├── plugins/
+│   └── weather-simplified/
+│       ├── .claude-plugin/
+│       │   └── plugin.json     # Plugin manifest
+│       ├── .mcp.json           # MCP server config (remote HTTP)
+│       └── skills/
+│           ├── current-weather/
+│           │   └── SKILL.md
+│           ├── forecast/
+│           │   └── SKILL.md
+│           ├── extended-forecast/
+│           │   └── SKILL.md
+│           ├── hourly-forecast/
+│           │   └── SKILL.md
+│           ├── weather-alerts/
+│           │   └── SKILL.md
+│           ├── tropical-weather/
+│           │   └── SKILL.md
+│           └── severe-weather/
+│               └── SKILL.md
+├── LICENSE
+└── README.md
 ```
 
+### Key Files
+
+**`.claude-plugin/marketplace.json`** — defines the marketplace catalog:
+```json
+{
+  "name": "weather-simplified",
+  "owner": { "name": "Weather Simplified" },
+  "plugins": [
+    {
+      "name": "weather-simplified",
+      "source": "./plugins/weather-simplified",
+      "description": "12 weather tools powered by NOAA",
+      "version": "1.1.0",
+      "category": "external-integrations",
+      "keywords": ["weather", "forecast", "noaa"]
+    }
+  ]
+}
+```
+
+**`plugins/weather-simplified/.mcp.json`** — connects to the remote MCP server:
 ```json
 {
   "mcpServers": {
-    "weather": {
-      "command": "npx",
-      "args": ["tsx", "/absolute/path/to/weather-simplified-graphql/src/mcp/server.ts"]
+    "weather-simplified": {
+      "type": "streamable-http",
+      "url": "https://weather-simplified-graphql.azurewebsites.net/mcp"
     }
   }
 }
 ```
 
----
+**`plugins/weather-simplified/skills/*/SKILL.md`** — each skill tells Claude how to use the MCP tools for that weather domain.
 
-## Example Prompts
+### Team Configuration
 
-Once connected, try asking Claude:
+Add to your project's `.claude/settings.json` to auto-suggest the marketplace:
 
-- **"What's the weather like in Denver right now?"** — calls `get_current_conditions`
-- **"Will it rain in NYC this week?"** — calls `get_extended_forecast`
-- **"Give me the hourly forecast for the next 12 hours in Miami"** — calls `get_hourly_forecast`
-- **"Are there any weather warnings near zip code 73301?"** — calls `get_weather_alerts`
-- **"Any tropical storms forming in the Atlantic?"** — calls `get_tropical_atlantic`
-- **"What does the severe weather outlook look like today?"** — calls `get_severe_weather`
-- **"Are there any active tornado watches?"** — calls `get_watches`
+```json
+{
+  "extraKnownMarketplaces": {
+    "weather-simplified": {
+      "source": {
+        "source": "github",
+        "repo": "klietzau280/claude-plugins-weather-simplified"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "weather-simplified@weather-simplified": true
+  }
+}
+```
 
 ---
 
@@ -150,41 +280,35 @@ Data is free, public, and requires no API key.
 ## Architecture
 
 ```
-Claude Desktop / claude.ai
+Claude Code / Claude Desktop
         │
         ▼
-┌─────────────────────┐
-│  MCP Server          │
-│  (stdio or HTTP)     │
-│                      │
-│  12 tools registered │
-└──────────┬──────────┘
+┌─────────────────────────┐
+│  Plugin: Skills (7)      │
+│  /current-weather        │
+│  /forecast               │
+│  /tropical-weather  ...  │
+└──────────┬──────────────┘
+           │ invokes
+           ▼
+┌─────────────────────────┐
+│  MCP Server (12 tools)   │
+│  stdio or HTTP transport │
+└──────────┬──────────────┘
            │
            ▼
-┌─────────────────────┐
-│  Weather Services    │
-│                      │
-│  • CurrentConditions │
-│  • ForecastDay       │
-│  • ForecastExtended  │
-│  • HourlyForecast    │
-│  • WeatherAlerts     │
-│  • TropicalV2        │
-│  • SevereWeather     │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  NOAA / NWS APIs     │
-│  (api.weather.gov)   │
-└─────────────────────┘
+┌─────────────────────────┐
+│  NOAA / NWS APIs         │
+│  api.weather.gov         │
+│  NHC · SPC               │
+└─────────────────────────┘
 ```
 
 ---
 
 ## Privacy
 
-- **No personal data collected** — the only input is a 5-digit US ZIP code
+- **No personal data collected** — only accepts 5-digit US ZIP codes
 - **No cookies, analytics, or tracking**
 - **ZIP codes are not stored or logged**
 - Weather data may be cached temporarily for performance
@@ -196,8 +320,10 @@ Claude Desktop / claude.ai
 
 - **Source code**: [weather-simplified-graphql](https://github.com/klietzau280/weather-simplified-graphql)
 - **Web app**: [Weather Simplified](https://github.com/klietzau280/weather-simplified)
+- **Plugin docs**: [Claude Code Plugins](https://code.claude.com/docs/en/plugins)
+- **Marketplace docs**: [Plugin Marketplaces](https://code.claude.com/docs/en/plugin-marketplaces)
+- **Submit to Anthropic**: [Plugin Directory Submission](https://clau.de/plugin-directory-submission)
 - **Issues**: [Report a bug](https://github.com/klietzau280/claude-plugins-weather-simplified/issues)
-- **MCP Protocol**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
 
 ---
 

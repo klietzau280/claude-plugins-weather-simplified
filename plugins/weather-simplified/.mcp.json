@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "weather-simplified": {
+      "type": "streamable-http",
+      "url": "https://weather-simplified-graphql.azurewebsites.net/mcp"
+    }
+  }
+}
