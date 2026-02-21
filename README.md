@@ -1,24 +1,10 @@
+<div align="center">
+
+<img src="banner.svg" alt="Weather Simplified — MCP Plugin for Claude" width="700" />
+
+</div>
+
 # Weather Simplified — MCP Plugin for Claude
-
-```
-       ☀                  ___
-      -+-              __(   )__
-      / \           .-(         )-.
-                   (    ☁    ☁     )
-                    '-(       )-'
-                      | | | | |
-                      ' ' ' ' '
-
-                  .~~~~~~~~~~~~~.
-                .~~~~~~~~~~~~~~~~~.
-              .~~~~~~~~~~~~~~~~~~~~~.
-            .~~~~~~~~~~~~~~~~~~~~~~~~~.
-
-              W e a t h e r
-           S I M P L I F I E D
-
-         ~~~ MCP Plugin for Claude ~~~
-```
 
 Real-time US weather data from the **National Weather Service (NOAA)** — available as tools for Claude via the [Model Context Protocol](https://modelcontextprotocol.io).
 
