@@ -1,12 +1,10 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "weather-simplified",
+  "description": "Real-time US weather data from NOAA — forecasts, alerts, tropical weather, and severe weather. Install the plugins you need.",
   "owner": {
     "name": "Weather Simplified",
     "email": "klietzau280@users.noreply.github.com"
-  },
-  "metadata": {
-    "description": "Real-time US weather data from NOAA — forecasts, alerts, tropical weather, and severe weather. Install the plugins you need.",
-    "version": "1.1.0"
   },
   "plugins": [
     {
